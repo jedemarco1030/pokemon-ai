@@ -41,7 +41,7 @@ export function TeamBuilderView({ user }: { user: User }) {
         const teams = await getTeams(user.id)
 
         // Fetch details for each team member to get types
-        const teamsWithDetails = await Promise.all(teams.map(async team => {
+        const teamsWithDetails = await Promise.all(teams.map(async (team: any) => {
             const membersWithDetails = await Promise.all(team.members.map(async (member: { pokemon_id: number; pokemon_name: string; slot: number }) => {
                 try {
                     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${member.pokemon_id}`)
