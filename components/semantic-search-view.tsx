@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { Search, Loader2, Sparkles, Filter } from "lucide-react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,7 +14,23 @@ import { processNaturalLanguageSearch } from "@/app/actions/semantic-search"
 import type { Pokemon } from "@/types/pokemon"
 
 export function SemanticSearchView() {
-    const [query, setQuery] = useState("")
+    return (
+        <Suspense fallback={
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="text-muted-foreground animate-pulse text-lg font-medium">Loading search...</p>
+            </div>
+        }>
+            <SemanticSearchContent />
+        </Suspense>
+    )
+}
+
+function SemanticSearchContent() {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const initialQuery = searchParams.get("q") || ""
+    const [query, setQuery] = useState(initialQuery)
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState<Pokemon[]>([])
     const [filters, setFilters] = useState<{
@@ -28,9 +45,14 @@ export function SemanticSearchView() {
     const { user } = useAuth()
     const { favorites, toggleFavorite, isFavorited } = useFavorites(user)
 
-    const handleSearch = async (e: React.FormEvent) => {
-        e.preventDefault()
+    const handleSearch = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault()
         if (!query.trim()) return
+
+        // Update URL with query
+        const params = new URLSearchParams(searchParams.toString())
+        params.set("q", query.trim())
+        router.push(`?${params.toString()}`, { scroll: false })
 
         setIsLoading(true)
         setError(null)
@@ -69,6 +91,23 @@ export function SemanticSearchView() {
         }
     }
 
+    // Effect to handle initial query from URL
+    useEffect(() => {
+        if (initialQuery) {
+            handleSearch()
+        }
+    }, []) // Run only once on mount
+
+    const setQueryAndSearch = (newQuery: string) => {
+        setQuery(newQuery)
+        // We can't call handleSearch(newQuery) directly because it uses the 'query' state
+        // and setQuery is async. Instead, we can trigger it in another effect or just update the URL.
+        const params = new URLSearchParams(searchParams.toString())
+        params.set("q", newQuery)
+        router.push(`?${params.toString()}`, { scroll: false })
+
+    }
+
     return (
         <div className="space-y-8">
             <div className="max-w-3xl mx-auto space-y-4">
@@ -96,9 +135,9 @@ export function SemanticSearchView() {
                         </form>
                         <div className="mt-4 flex flex-wrap gap-2 items-center text-sm text-muted-foreground">
                             <span>Try:</span>
-                            <button onClick={() => setQuery("Red dragon pokemon")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Red dragon pokemon&quot;</button>
-                            <button onClick={() => setQuery("Gen 1 water types")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Gen 1 water types&quot;</button>
-                            <button onClick={() => setQuery("Legendary grass types")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Legendary grass types&quot;</button>
+                            <button onClick={() => setQueryAndSearch("Red dragon pokemon")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Red dragon pokemon&quot;</button>
+                            <button onClick={() => setQueryAndSearch("Gen 1 water types")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Gen 1 water types&quot;</button>
+                            <button onClick={() => setQueryAndSearch("Legendary grass types")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Legendary grass types&quot;</button>
                         </div>
                     </CardContent>
                 </Card>
