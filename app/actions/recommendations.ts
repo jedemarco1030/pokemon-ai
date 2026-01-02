@@ -47,11 +47,11 @@ export async function getPersonalizedRecommendations(userId: string) {
 
         const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0][0]
 
-        // 4. Fetch Pokemon of that type from PokeAPI
+        // 4. Fetch Pokémon of that type from PokeAPI
         const typeRes = await fetch(`https://pokeapi.co/api/v2/type/${topType}`)
         const typeData = await typeRes.json()
 
-        const favoriteIds = new Set(favorites.map(f => f.pokemon_id))
+        const favoriteIds = new Set(favorites.map((f: { pokemon_id: number }) => f.pokemon_id))
         const candidates = typeData.pokemon
             .map((p: { pokemon: { url: string, name: string } }) => {
                 const id = parseInt(p.pokemon.url.split('/').slice(-2, -1)[0])
