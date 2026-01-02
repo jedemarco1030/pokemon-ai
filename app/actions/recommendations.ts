@@ -31,9 +31,9 @@ export async function getPersonalizedRecommendations(userId: string) {
             })
         )
 
-        const validDetails = favoriteDetails.filter(d => d !== null)
-        
-        // 3. Simple Recommendation Logic: Recommend Pokemon of the same types
+        const validDetails = favoriteDetails.filter((d: any) => d !== null)
+
+        // 3. Simple Recommendation Logic: Recommend Pokémon of the same types
         const types = new Array<string>()
         validDetails.forEach(d => {
             (d as { types: { type: { name: string } }[] }).types.forEach((t: { type: { name: string } }) => types.push(t.type.name))
@@ -50,7 +50,7 @@ export async function getPersonalizedRecommendations(userId: string) {
         // 4. Fetch Pokemon of that type from PokeAPI
         const typeRes = await fetch(`https://pokeapi.co/api/v2/type/${topType}`)
         const typeData = await typeRes.json()
-        
+
         const favoriteIds = new Set(favorites.map(f => f.pokemon_id))
         const candidates = typeData.pokemon
             .map((p: { pokemon: { url: string, name: string } }) => {
