@@ -21,7 +21,7 @@ export async function getPersonalizedRecommendations(userId: string) {
 
         // 2. Fetch details for favorite Pokemon to analyze patterns
         const favoriteDetails = await Promise.all(
-            favorites.slice(0, 5).map(async (fav) => {
+            favorites.slice(0, 5).map(async (fav: { pokemon_id: number; pokemon_name: string }) => {
                 try {
                     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${fav.pokemon_id}`)
                     return await res.json()
