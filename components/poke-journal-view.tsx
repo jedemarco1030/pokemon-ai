@@ -29,7 +29,7 @@ export function PokeJournalView({ user }: { user: User }) {
     const fetchEntries = useCallback(async () => {
         setIsLoading(true)
         const data = await getJournalEntries(user.id)
-        setEntries(data.map(e => ({
+        setEntries(data.map((e: any) => ({
             ...e,
             created_at: new Date(e.created_at)
         })))
