@@ -35,7 +35,7 @@ export async function getPersonalizedRecommendations(userId: string) {
 
         // 3. Simple Recommendation Logic: Recommend Pokémon of the same types
         const types = new Array<string>()
-        validDetails.forEach(d => {
+        validDetails.forEach((d: any) => {
             (d as { types: { type: { name: string } }[] }).types.forEach((t: { type: { name: string } }) => types.push(t.type.name))
         })
 
