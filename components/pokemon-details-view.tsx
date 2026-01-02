@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft, ChevronRight, Star } from "lucide-react"
+import { ArrowLeft, ChevronRight, Star, Sparkles, Target } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { PokemonDetails } from "@/types/pokemon"
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import { useFavorites } from "@/hooks/use-favorites"
 import { toast } from "sonner"
 import { useAuth } from "@/components/auth-provider"
@@ -120,6 +120,21 @@ export function PokemonDetailsView({ pokemon }: PokemonDetailsViewProps) {
                                     {type}
                                 </Badge>
                             ))}
+                        </div>
+
+                        <div className="flex gap-2">
+                            <Button asChild variant="outline" size="sm" className="gap-2 border-primary/50 hover:bg-primary/5">
+                                <Link href="/move-optimizer">
+                                    <Sparkles className="h-4 w-4 text-primary" />
+                                    Optimize Move Set
+                                </Link>
+                            </Button>
+                            <Button asChild variant="outline" size="sm" className="gap-2 border-primary/50 hover:bg-primary/5">
+                                <Link href={`/catch-predictor?id=${pokemon.id}`}>
+                                    <Target className="h-4 w-4 text-primary" />
+                                    Predict Catch
+                                </Link>
+                            </Button>
                         </div>
 
                         <Card>

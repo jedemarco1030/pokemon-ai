@@ -12,7 +12,7 @@ interface PokemonListProps {
     isFavorited: (pokemonId: number) => boolean
 }
 
-export function PokemonList({ pokemon, user, favorites, onToggleFavorite, isFavorited }: PokemonListProps) {
+export function PokemonList({ pokemon, user, onToggleFavorite, isFavorited }: PokemonListProps) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {pokemon.map((poke) => (

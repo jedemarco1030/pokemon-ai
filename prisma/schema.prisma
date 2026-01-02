@@ -31,3 +31,48 @@ model Favorite {
   @@id([user_id, pokemon_id])
   @@map("favorites")
 }
+
+model Team {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String     @db.Uuid
+  name       String
+  created_at DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at DateTime   @default(now()) @db.Timestamptz(6)
+  members    TeamMember[]
+
+  @@map("teams")
+}
+
+model TeamMember {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  team_id    String   @db.Uuid
+  pokemon_id Int
+  pokemon_name String
+  slot       Int      // 1-6
+  team       Team     @relation(fields: [team_id], references: [id], onDelete: Cascade)
+
+  @@unique([team_id, slot])
+  @@map("team_members")
+}
+
+model ChatMessage {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String   @db.Uuid
+  role       String   // 'user' or 'assistant'
+  content    String
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("chat_messages")
+}
+
+model JournalEntry {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String   @db.Uuid
+  content    String
+  milestone  String?  // AI generated summary/milestone
+  suggestion String?  // AI generated suggestion
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("journal_entries")
+}

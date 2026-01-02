@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
+import { useState, useEffect, useCallback } from "react"
+// import { createClient } from "@/lib/supabase/client"
 import type { User } from "@supabase/supabase-js"
 import { getFavorites, toggleFavoriteAction } from "@/app/actions/pokemon"
 
@@ -9,16 +9,7 @@ export function useFavorites(user: User | null) {
     const [favorites, setFavorites] = useState<Set<number>>(new Set())
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        if (user) {
-            loadFavorites()
-        } else {
-            setFavorites(new Set())
-            setIsLoading(false)
-        }
-    }, [user])
-
-    async function loadFavorites() {
+    const loadFavorites = useCallback(async () => {
         if (!user) return
         try {
             const favoriteIds = await getFavorites(user.id)
@@ -28,7 +19,16 @@ export function useFavorites(user: User | null) {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [user])
+
+    useEffect(() => {
+        if (user) {
+            loadFavorites()
+        } else {
+            setFavorites(new Set())
+            setIsLoading(false)
+        }
+    }, [user, loadFavorites])
 
     async function toggleFavorite(pokemonId: number, pokemonName: string) {
         if (!user) {

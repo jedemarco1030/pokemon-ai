@@ -18,17 +18,17 @@ export function PokemonSearch() {
     useEffect(() => {
         const trimmedQuery = searchQuery.trim()
 
-        if (trimmedQuery.length >= 3 || trimmedQuery.length === 0) {
-            const debounceTimer = setTimeout(() => {
+        const debounceTimer = setTimeout(() => {
+            if (trimmedQuery.length >= 3 || trimmedQuery.length === 0) {
                 searchPokemon(trimmedQuery)
-            }, 300) // 300ms debounce
+            } else {
+                // Clear results if less than 3 characters but more than 0
+                searchPokemon(trimmedQuery)
+            }
+        }, 300) // 300ms debounce for all cases
 
-            return () => clearTimeout(debounceTimer)
-        } else if (trimmedQuery.length > 0 && trimmedQuery.length < 3) {
-            // Clear results if less than 3 characters
-            searchPokemon(trimmedQuery)
-        }
-    }, [searchQuery])
+        return () => clearTimeout(debounceTimer)
+    }, [searchQuery, searchPokemon])
 
     return (
         <div className="space-y-8">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { PokemonCard } from "@/components/pokemon-card"
 import type { Pokemon } from "@/types/pokemon"
 import { useFavorites } from "@/hooks/use-favorites"
@@ -14,16 +14,7 @@ export default function FavoritesPage() {
     const [isLoading, setIsLoading] = useState(true)
     const { favorites, toggleFavorite } = useFavorites(user)
 
-    useEffect(() => {
-        if (user && favorites.size > 0) {
-            loadFavoritePokemon()
-        } else {
-            setFavoritePokemon([])
-            setIsLoading(false)
-        }
-    }, [user, favorites])
-
-    async function loadFavoritePokemon() {
+    const loadFavoritePokemon = useCallback(async () => {
         setIsLoading(true)
         try {
             const pokemonPromises = Array.from(favorites).map(async (pokemonId) => {
@@ -35,7 +26,7 @@ export default function FavoritesPage() {
                     height: data.height,
                     weight: data.weight,
                     sprite: data.sprites.other["official-artwork"].front_default || data.sprites.front_default,
-                    types: data.types.map((t: any) => t.type.name),
+                    types: data.types.map((t: { type: { name: string } }) => t.type.name),
                 }
             })
 
@@ -46,7 +37,16 @@ export default function FavoritesPage() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [favorites])
+
+    useEffect(() => {
+        if (user && favorites.size > 0) {
+            loadFavoritePokemon()
+        } else {
+            setFavoritePokemon([])
+            setIsLoading(false)
+        }
+    }, [user, favorites, loadFavoritePokemon])
 
     if (authLoading) {
         return (

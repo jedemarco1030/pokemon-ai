@@ -50,8 +50,8 @@ async function getPokemonDetails(id: string): Promise<PokemonDetails | null> {
         }
 
         // Get flavor text in English
-        const flavorTextEntry = species.flavor_text_entries.find((entry: any) => entry.language.name === "en")
-        const genusEntry = species.genera.find((entry: any) => entry.language.name === "en")
+        const flavorTextEntry = species.flavor_text_entries.find((entry: { language: { name: string } }) => entry.language.name === "en")
+        const genusEntry = species.genera.find((entry: { language: { name: string } }) => entry.language.name === "en")
 
         return {
             id: pokemon.id,
@@ -59,13 +59,13 @@ async function getPokemonDetails(id: string): Promise<PokemonDetails | null> {
             height: pokemon.height,
             weight: pokemon.weight,
             sprite: pokemon.sprites.other["official-artwork"].front_default || pokemon.sprites.front_default,
-            types: pokemon.types.map((t: any) => t.type.name),
-            stats: pokemon.stats.map((s: any) => ({
+            types: pokemon.types.map((t: { type: { name: string } }) => t.type.name),
+            stats: pokemon.stats.map((s: { stat: { name: string }, base_stat: number }) => ({
                 name: s.stat.name,
                 value: s.base_stat,
                 maxValue: 255,
             })),
-            abilities: pokemon.abilities.map((a: any) => a.ability.name),
+            abilities: pokemon.abilities.map((a: { ability: { name: string } }) => a.ability.name),
             baseExperience: pokemon.base_experience,
             species: {
                 flavorText: flavorTextEntry?.flavor_text.replace(/\f/g, " ") || "No description available.",
@@ -76,17 +76,23 @@ async function getPokemonDetails(id: string): Promise<PokemonDetails | null> {
                 genderRate: species.gender_rate,
                 growthRate: species.growth_rate.name,
             },
-            heldItems: pokemon.held_items.map((item: any) => item.item.name),
+            heldItems: pokemon.held_items.map((item: { item: { name: string } }) => item.item.name),
             evolutionChain,
             moves: pokemon.moves
                 .slice(0, 20)
-                .map((m: any) => ({
+                .map((m: {
+                    move: { name: string },
+                    version_group_details: {
+                        move_learn_method: { name: string },
+                        level_learned_at: number
+                    }[]
+                }) => ({
                     name: m.move.name,
                     learnMethod: m.version_group_details[0]?.move_learn_method.name || "unknown",
                     level: m.version_group_details[0]?.level_learned_at || undefined,
                 }))
-                .sort((a: any, b: any) => (a.level || 999) - (b.level || 999)),
-            games: pokemon.game_indices.map((g: any) => g.version.name).slice(0, 10),
+                .sort((a: { level?: number }, b: { level?: number }) => (a.level || 999) - (b.level || 999)),
+            games: pokemon.game_indices.map((g: { version: { name: string } }) => g.version.name).slice(0, 10),
         }
     } catch (error) {
         console.error("Error fetching Pokemon details:", error)

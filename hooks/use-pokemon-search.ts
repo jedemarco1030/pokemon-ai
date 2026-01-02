@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import type { Pokemon } from "@/types/pokemon"
 
 interface PokemonApiResponse {
@@ -54,7 +54,7 @@ export function usePokemonSearch() {
         fetchAllPokemonNames()
     }, [])
 
-    const fetchPokemonDetails = async (nameOrId: string): Promise<Pokemon> => {
+    const fetchPokemonDetails = useCallback(async (nameOrId: string): Promise<Pokemon> => {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nameOrId.toLowerCase()}`)
         if (!response.ok) {
             throw new Error(`Pokemon not found: ${nameOrId}`)
@@ -69,9 +69,9 @@ export function usePokemonSearch() {
             sprite: data.sprites.other["official-artwork"].front_default,
             types: data.types.map((t) => t.type.name),
         }
-    }
+    }, [])
 
-    const searchPokemon = async (query: string) => {
+    const searchPokemon = useCallback(async (query: string) => {
         setLoading(true)
         setError(null)
         setPokemon([])
@@ -115,9 +115,9 @@ export function usePokemonSearch() {
         } finally {
             setLoading(false)
         }
-    }
+    }, [allPokemon, fetchPokemonDetails, limit])
 
-    const loadMore = async () => {
+    const loadMore = useCallback(async () => {
         if (loading || !hasMore) return
 
         setLoading(true)
@@ -150,7 +150,7 @@ export function usePokemonSearch() {
         } finally {
             setLoading(false)
         }
-    }
+    }, [loading, hasMore, currentQuery, allPokemon, offset, limit, fetchPokemonDetails])
 
     return {
         pokemon,

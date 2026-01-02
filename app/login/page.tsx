@@ -8,7 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 interface FormData {
@@ -22,7 +21,6 @@ interface FormErrors {
 }
 
 export default function LoginPage() {
-    const router = useRouter()
     const [formData, setFormData] = useState<FormData>({
         email: "",
         password: "",
@@ -76,7 +74,7 @@ export default function LoginPage() {
         try {
             const supabase = createClient()
 
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data: _data, error } = await supabase.auth.signInWithPassword({
                 email: formData.email,
                 password: formData.password,
             })
@@ -138,7 +136,7 @@ export default function LoginPage() {
 
                             {/* Register Link */}
                             <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{" "}
+                                Don&apos;t have an account?{" "}
                                 <Link href="/register" className="text-primary hover:underline underline-offset-4">
                                     Register
                                 </Link>

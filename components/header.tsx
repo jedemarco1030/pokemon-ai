@@ -1,13 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/hooks/use-theme"
 import { createClient } from "@/lib/supabase/client"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/components/auth-provider"
 import type { User } from "@supabase/supabase-js"
 import { getProfile, createOrUpdateProfile } from "@/app/actions/pokemon"
 
@@ -17,11 +22,10 @@ type UserProfile = {
     email: string | null
 }
 
-export function Header() {
+export function Header({ user }: { user: User | null }) {
     const { theme, toggleTheme } = useTheme()
-    const { user } = useAuth()
     const [profile, setProfile] = useState<UserProfile | null>(null)
-    const [loading, setLoading] = useState(true)
+    // const [loading, setLoading] = useState(true)
     const router = useRouter()
     const supabase = createClient()
 
@@ -33,7 +37,7 @@ export function Header() {
 
                     if (existingProfile) {
                         console.log("[v0] Profile found:", existingProfile)
-                        setProfile(existingProfile)
+                        setProfile(existingProfile as UserProfile)
                     } else {
                         const firstName = user.user_metadata?.first_name || "User"
                         const lastName = user.user_metadata?.last_name || ""
@@ -46,21 +50,20 @@ export function Header() {
                         })
 
                         if (newProfile) {
-                            setProfile(newProfile)
+                            setProfile(newProfile as UserProfile)
                         }
                     }
                 } catch (err) {
                     console.error("Error fetching profile:", err)
                     setProfile({
-                        first_name: user.user_metadata?.first_name || "User",
-                        last_name: user.user_metadata?.last_name || "",
+                        first_name: (user.user_metadata?.first_name as string) || "User",
+                        last_name: (user.user_metadata?.last_name as string) || "",
                         email: user.email || "",
                     })
                 }
             } else {
                 setProfile(null)
             }
-            setLoading(false)
         }
 
         fetchProfile()
@@ -113,9 +116,51 @@ export function Header() {
                     <span className="text-sm font-medium">Welcome, {displayName}!</span>
 
                     {user && (
-                        <Button variant="ghost" asChild>
-                            <Link href="/favorites">Favorites</Link>
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="gap-2">
+                                    Features <ChevronDown className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48">
+                                <DropdownMenuItem asChild>
+                                    <Link href="/pokesearch" className="w-full font-medium text-primary">PokéSearch</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/poke-news" className="w-full">Poke-News & Meta</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/ai-search" className="w-full">AI Search</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/journal" className="w-full">Journal</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/games" className="w-full">Games</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/move-optimizer" className="w-full">Optimizer</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/recommendations" className="w-full">Recommendations</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/battle-simulator" className="w-full">Battle Sim</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/whos-that-pokemon" className="w-full">Who&apos;s That?</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/catch-predictor" className="w-full">Catch Predictor</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/favorites" className="w-full">Favorites</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/team-builder" className="w-full">Team Builder</Link>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     )}
 
                     {user ? (

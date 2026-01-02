@@ -14,7 +14,7 @@ export default function RegisterSuccessPage() {
                         </div>
                         <CardTitle className="text-2xl">Check Your Email</CardTitle>
                         <CardDescription className="text-balance">
-                            We've sent you a confirmation email. Please check your inbox and click the confirmation link to activate
+                            We&apos;ve sent you a confirmation email. Please check your inbox and click the confirmation link to activate
                             your account.
                         </CardDescription>
                     </CardHeader>
@@ -31,7 +31,7 @@ export default function RegisterSuccessPage() {
                             <Link href="/login">Go to Login</Link>
                         </Button>
                         <div className="text-center text-sm text-muted-foreground">
-                            Didn't receive the email?{" "}
+                            Didn&apos;t receive the email?{" "}
                             <Link href="/register" className="text-primary hover:underline underline-offset-4">
                                 Try again
                             </Link>
