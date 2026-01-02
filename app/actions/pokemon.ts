@@ -9,7 +9,7 @@ export async function getFavorites(userId: string) {
             where: { user_id: userId },
             select: { pokemon_id: true }
         })
-        return favorites.map(f => f.pokemon_id)
+        return favorites.map((f: { pokemon_id: number }) => f.pokemon_id)
     } catch (error) {
         console.error("Error fetching favorites:", error)
         return []
