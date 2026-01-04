@@ -14,11 +14,11 @@ export function PokeChatOverlay() {
     if (loading || !user) return null
 
     return (
-        <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+        <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end pointer-events-none">
             {/* Chat Window */}
             <div
                 className={cn(
-                    "mb-4 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-8rem)] transition-all duration-300 origin-bottom-right",
+                    "mb-4 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-8rem)] transition-all duration-300 origin-bottom-right pointer-events-auto",
                     isOpen 
                         ? "opacity-100 scale-100 translate-y-0" 
                         : "opacity-0 scale-95 translate-y-4 pointer-events-none"
@@ -49,7 +49,7 @@ export function PokeChatOverlay() {
             <Button
                 size="icon"
                 className={cn(
-                    "h-14 w-14 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95",
+                    "h-14 w-14 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95 pointer-events-auto",
                     isOpen ? "bg-muted text-muted-foreground" : "bg-primary text-primary-foreground"
                 )}
                 onClick={() => setIsOpen(!isOpen)}

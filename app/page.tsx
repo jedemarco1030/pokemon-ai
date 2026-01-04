@@ -18,13 +18,13 @@ export default function Home() {
                         The ultimate AI-powered companion for your Pokemon journey. From strategic battle analysis to semantic news tracking, we&apos;ve got everything a trainer needs.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <Button asChild size="lg" className="gap-2 text-lg cursor-pointer touch-manipulation active:scale-95 transition-transform">
+                        <Button asChild size="lg" className="gap-2 text-lg cursor-pointer touch-manipulation active:opacity-80 transition-opacity">
                             <Link href="/pokesearch">
                                 <Search className="h-5 w-5" />
                                 Start Searching
                             </Link>
                         </Button>
-                        <Button asChild variant="outline" size="lg" className="gap-2 text-lg border-primary/50 hover:bg-primary/5 cursor-pointer touch-manipulation active:scale-95 transition-transform">
+                        <Button asChild variant="outline" size="lg" className="gap-2 text-lg border-primary/50 hover:bg-primary/5 cursor-pointer touch-manipulation active:opacity-80 transition-opacity">
                             <Link href="/ai-search">
                                 <Sparkles className="h-5 w-5 text-primary" />
                                 Try AI Search

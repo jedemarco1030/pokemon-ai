@@ -63,7 +63,7 @@ export async function getProfile(userId: string) {
         console.log(`[getProfile] Found profile:`, profile);
         return profile;
     } catch (error) {
-        console.error("Error fetching profile:", error)
+        console.error("[getProfile] Error fetching profile:", error instanceof Error ? error.message : error)
         return null;
     }
 }
@@ -83,7 +83,7 @@ export async function createOrUpdateProfile(userId: string, data: { first_name: 
         console.log(`[createOrUpdateProfile] Upserted profile:`, profile);
         return profile;
     } catch (error) {
-        console.error("Error upserting profile:", error)
+        console.error("[createOrUpdateProfile] Error upserting profile:", error instanceof Error ? error.message : error)
         return null;
     }
 }

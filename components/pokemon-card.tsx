@@ -116,11 +116,11 @@ export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavori
                     </div>
                 </div>
 
-                <Link href={`/pokemon/${pokemon.id}`} className="block">
-                    <Button className="w-full" variant="default">
+                <Button asChild className="w-full" variant="default">
+                    <Link href={`/pokemon/${pokemon.id}`}>
                         View Details
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
             </CardContent>
         </Card>
     )

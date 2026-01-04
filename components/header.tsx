@@ -124,16 +124,13 @@ export function Header({ user }: { user: User | null }) {
                 </Link>
 
                 {/* Right: Navigation Links and Theme Toggle */}
-                <div className="flex items-center gap-4 relative z-[60]">
-                    <span className="text-sm font-medium">Welcome, {displayName}!</span>
+                <div className="flex items-center gap-2 sm:gap-4 relative z-[60]">
+                    <span className="text-xs sm:text-sm font-medium hidden sm:inline-block">Welcome, {displayName}!</span>
 
                     {user && (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="gap-2 cursor-pointer touch-manipulation active:opacity-70" onClick={(e) => {
-                                    console.log("Features clicked");
-                                    // Radix should handle this, but explicit onClick can help on iOS
-                                }}>
+                                <Button variant="ghost" size="sm" className="gap-1 sm:gap-2 cursor-pointer touch-manipulation active:opacity-70">
                                     Features <ChevronDown className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
@@ -179,15 +176,15 @@ export function Header({ user }: { user: User | null }) {
                     )}
 
                     {user ? (
-                        <Button variant="ghost" onClick={handleLogout} className="cursor-pointer touch-manipulation active:opacity-70">
+                        <Button variant="ghost" size="sm" onClick={handleLogout} className="cursor-pointer touch-manipulation active:opacity-70">
                             Logout
                         </Button>
                     ) : (
                         <>
-                            <Button variant="ghost" asChild className="cursor-pointer touch-manipulation active:opacity-70">
+                            <Button variant="ghost" size="sm" asChild className="cursor-pointer touch-manipulation active:opacity-70">
                                 <Link href="/register">Register</Link>
                             </Button>
-                            <Button variant="ghost" asChild className="cursor-pointer touch-manipulation active:opacity-70">
+                            <Button variant="ghost" size="sm" asChild className="cursor-pointer touch-manipulation active:opacity-70">
                                 <Link href="/login">Login</Link>
                             </Button>
                         </>
@@ -197,10 +194,10 @@ export function Header({ user }: { user: User | null }) {
                         variant="ghost"
                         size="icon"
                         onClick={toggleTheme}
-                        className="cursor-pointer touch-manipulation active:opacity-70"
+                        className="h-8 w-8 sm:h-9 sm:w-9 cursor-pointer touch-manipulation active:opacity-70"
                         aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
                     >
-                        {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                        {theme === "dark" ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
                     </Button>
                 </div>
             </div>
