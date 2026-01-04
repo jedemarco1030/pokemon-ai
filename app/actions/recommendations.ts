@@ -84,9 +84,10 @@ export async function getPersonalizedRecommendations(userId: string) {
 
     } catch (error) {
         console.error("Error generating recommendations:", error)
+        // Re-throw or return a structured error that doesn't crash the server component if it's used in one
         return {
             success: false,
-            error: "Failed to generate recommendations",
+            error: error instanceof Error ? error.message : "Failed to generate recommendations",
             recommendations: []
         }
     }

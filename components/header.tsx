@@ -33,12 +33,14 @@ export function Header({ user }: { user: User | null }) {
         const fetchProfile = async () => {
             if (user) {
                 try {
+                    console.log("[Header] Fetching profile for user:", user.id)
                     const existingProfile = await getProfile(user.id)
 
                     if (existingProfile) {
-                        console.log("[v0] Profile found:", existingProfile)
+                        console.log("[Header] Profile found:", existingProfile)
                         setProfile(existingProfile as UserProfile)
                     } else {
+                        console.log("[Header] No profile found, creating one...")
                         const firstName = user.user_metadata?.first_name || "User"
                         const lastName = user.user_metadata?.last_name || ""
                         const email = user.email || ""
@@ -50,11 +52,21 @@ export function Header({ user }: { user: User | null }) {
                         })
 
                         if (newProfile) {
+                            console.log("[Header] New profile created:", newProfile)
                             setProfile(newProfile as UserProfile)
+                        } else {
+                            // If createOrUpdateProfile returns null (caught error), use fallback
+                            console.warn("[Header] Failed to create profile, using fallback.")
+                            setProfile({
+                                first_name: (user.user_metadata?.first_name as string) || "User",
+                                last_name: (user.user_metadata?.last_name as string) || "",
+                                email: user.email || "",
+                            })
                         }
                     }
                 } catch (err) {
-                    console.error("Error fetching profile:", err)
+                    console.error("[Header] Error in fetchProfile:", err)
+                    // Fallback to user metadata if database fails
                     setProfile({
                         first_name: (user.user_metadata?.first_name as string) || "User",
                         last_name: (user.user_metadata?.last_name as string) || "",
@@ -112,13 +124,16 @@ export function Header({ user }: { user: User | null }) {
                 </Link>
 
                 {/* Right: Navigation Links and Theme Toggle */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 relative z-[60]">
                     <span className="text-sm font-medium">Welcome, {displayName}!</span>
 
                     {user && (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="gap-2">
+                                <Button variant="ghost" className="gap-2 cursor-pointer touch-manipulation active:opacity-70" onClick={(e) => {
+                                    console.log("Features clicked");
+                                    // Radix should handle this, but explicit onClick can help on iOS
+                                }}>
                                     Features <ChevronDown className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
@@ -164,15 +179,15 @@ export function Header({ user }: { user: User | null }) {
                     )}
 
                     {user ? (
-                        <Button variant="ghost" onClick={handleLogout}>
+                        <Button variant="ghost" onClick={handleLogout} className="cursor-pointer touch-manipulation active:opacity-70">
                             Logout
                         </Button>
                     ) : (
                         <>
-                            <Button variant="ghost" asChild>
+                            <Button variant="ghost" asChild className="cursor-pointer touch-manipulation active:opacity-70">
                                 <Link href="/register">Register</Link>
                             </Button>
-                            <Button variant="ghost" asChild>
+                            <Button variant="ghost" asChild className="cursor-pointer touch-manipulation active:opacity-70">
                                 <Link href="/login">Login</Link>
                             </Button>
                         </>
@@ -182,6 +197,7 @@ export function Header({ user }: { user: User | null }) {
                         variant="ghost"
                         size="icon"
                         onClick={toggleTheme}
+                        className="cursor-pointer touch-manipulation active:opacity-70"
                         aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
                     >
                         {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}

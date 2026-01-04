@@ -13,7 +13,7 @@ const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL.replace('sslmode=require', 'sslmode=disable');
   const pool = new pg.Pool({
     connectionString,
-    ssl: {
+    ssl: connectionString.includes('localhost') ? false : {
       rejectUnauthorized: false
     }
   });

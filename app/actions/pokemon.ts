@@ -54,19 +54,25 @@ export async function toggleFavoriteAction(userId: string, pokemonId: number, po
 }
 
 export async function getProfile(userId: string) {
+    if (!userId) return null;
     try {
-        return await prisma.profile.findUnique({
+        console.log(`[getProfile] Fetching profile for userId: ${userId}`);
+        const profile = await prisma.profile.findUnique({
             where: { id: userId }
         })
+        console.log(`[getProfile] Found profile:`, profile);
+        return profile;
     } catch (error) {
         console.error("Error fetching profile:", error)
-        return null
+        return null;
     }
 }
 
 export async function createOrUpdateProfile(userId: string, data: { first_name: string, last_name: string, email: string }) {
+    if (!userId) return null;
     try {
-        return await prisma.profile.upsert({
+        console.log(`[createOrUpdateProfile] Upserting profile for userId: ${userId}`, data);
+        const profile = await prisma.profile.upsert({
             where: { id: userId },
             update: data,
             create: {
@@ -74,8 +80,10 @@ export async function createOrUpdateProfile(userId: string, data: { first_name: 
                 ...data
             }
         })
+        console.log(`[createOrUpdateProfile] Upserted profile:`, profile);
+        return profile;
     } catch (error) {
         console.error("Error upserting profile:", error)
-        return null
+        return null;
     }
 }
