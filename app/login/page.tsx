@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 interface FormData {
@@ -21,6 +22,7 @@ interface FormErrors {
 }
 
 export default function LoginPage() {
+    const router = useRouter()
     const [formData, setFormData] = useState<FormData>({
         email: "",
         password: "",
@@ -81,7 +83,8 @@ export default function LoginPage() {
 
             if (error) throw error
 
-            window.location.href = "/"
+            router.push("/")
+            router.refresh()
         } catch (error: unknown) {
             setApiError(error instanceof Error ? error.message : "An error occurred during login")
             setIsLoading(false)

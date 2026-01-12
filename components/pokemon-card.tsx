@@ -7,7 +7,7 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Star } from "lucide-react"
+import { Star, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import type { Pokemon } from "@/types/pokemon"
 import type { User } from "@supabase/supabase-js"
@@ -17,6 +17,7 @@ interface PokemonCardProps {
     user: User | null
     isFavorited?: boolean
     onToggleFavorite?: (pokemonId: number, pokemonName: string) => void
+    isToggleLoading?: boolean
 }
 
 const typeColors: Record<string, string> = {
@@ -40,7 +41,7 @@ const typeColors: Record<string, string> = {
     fairy: "bg-pink-400",
 }
 
-export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavorite }: PokemonCardProps) {
+export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavorite, isToggleLoading }: PokemonCardProps) {
     const handleFavoriteClick = (e: React.MouseEvent) => {
         e.preventDefault()
         console.log("[v0] Star clicked", { user: !!user, pokemon: pokemon.name, id: pokemon.id })
@@ -70,12 +71,17 @@ export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavori
                         <span className="text-sm text-muted-foreground font-mono">#{pokemon.id.toString().padStart(3, "0")}</span>
                         <button
                             onClick={handleFavoriteClick}
-                            className={`relative group ${!user ? "opacity-50 cursor-pointer" : "cursor-pointer hover:scale-110 transition-transform"}`}
+                            className={`relative group ${!user ? "opacity-50 cursor-pointer" : "cursor-pointer hover:scale-110 transition-transform"} ${isToggleLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                             title={!user ? "Login to favorite Pokemon" : isFavorited ? "Remove from favorites" : "Add to favorites"}
+                            disabled={isToggleLoading}
                         >
-                            <Star
-                                className={`w-6 h-6 ${isFavorited ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
-                            />
+                            {isToggleLoading ? (
+                                <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                            ) : (
+                                <Star
+                                    className={`w-6 h-6 ${isFavorited ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
+                                />
+                            )}
                             {!user && (
                                 <div className="absolute bottom-full mb-2 right-0 w-48 bg-popover text-popover-foreground text-xs rounded-md shadow-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border">
                                     Login to favorite Pokemon

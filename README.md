@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokemon AI
 
-## Getting Started
+The ultimate AI-powered companion for your Pokemon journey. From strategic battle analysis to semantic news tracking, Pokemon AI provides everything a trainer needs to excel.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **AI Battle Simulator**: Test your skills against iconic Gym Leaders like Brock and Misty in an AI-powered battle arena.
+- **Poke-News & Meta-Analysis**: Stay ahead of the game with real-time semantic news and competitive meta-analysis.
+- **Pro Team Builder**: Construct the perfect team and use the **Move Optimizer** to maximize your competitive edge.
+- **Trainer's Journal**: Document your journey and let AI summarize your milestones and provide growth suggestions.
+- **Catch Predictor**: Calculate your chances of success before throwing that Master Ball with our AI predictor.
+- **AI Search**: Experience semantic search to find Pokemon and information more intuitively.
+- **Minigames**: Put your knowledge to the test with "Who's That Pokemon?" and other interactive challenges.
+
+## 🛠 Tech Stack
+
+- **Framework**: [Next.js 15+](https://nextjs.org) (App Router)
+- **Database**: [Prisma](https://www.prisma.io) with [PostgreSQL](https://www.postgresql.org)
+- **Authentication**: [Supabase Auth](https://supabase.com/auth)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com) & [Radix UI](https://www.radix-ui.com)
+- **Icons**: [Lucide React](https://lucide.dev)
+- **Testing**: [Jest](https://jestjs.io) & [Playwright](https://playwright.dev)
+- **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Node.js installed
+- A PostgreSQL database (e.g., Supabase)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/jedemarco1030/pokemon-ai.git
+   cd pokemon-ai
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up your environment variables:
+   Create a `.env` file in the root and add your database and Supabase credentials.
+
+4. Initialize the database:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+5. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📜 Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the application for production.
+- `npm run start`: Starts the production server.
+- `npm run lint`: Runs ESLint to check for code quality.
+- `npm run test`: Runs unit and integration tests using Jest.
+- `npm run test:e2e`: Runs end-to-end tests using Playwright.
 
-## Learn More
+## 📂 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `app/`: Next.js App Router routes and Server Actions.
+- `components/`: Reusable UI components (Shadcn UI).
+- `hooks/`: Custom React hooks.
+- `lib/`: Utility functions and shared logic.
+- `prisma/`: Database schema and migrations.
+- `public/`: Static assets.
+- `types/`: TypeScript type definitions.
+- `__tests__/`: Unit and integration tests.
+- `e2e/`: End-to-end tests.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is private and for educational purposes.

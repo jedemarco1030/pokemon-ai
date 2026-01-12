@@ -13,7 +13,7 @@ export function PokemonSearch() {
     const [searchQuery, setSearchQuery] = useState("")
     const { pokemon, loading, error, searchPokemon, loadMore, hasMore } = usePokemonSearch()
     const { user } = useAuth()
-    const { favorites, toggleFavorite, isFavorited } = useFavorites(user)
+    const { favorites, toggleFavorite, isFavorited, isToggleLoading } = useFavorites(user)
 
     useEffect(() => {
         const trimmedQuery = searchQuery.trim()
@@ -76,6 +76,7 @@ export function PokemonSearch() {
                         favorites={favorites}
                         onToggleFavorite={toggleFavorite}
                         isFavorited={isFavorited}
+                        isToggleLoading={isToggleLoading}
                     />
 
                     {hasMore && (

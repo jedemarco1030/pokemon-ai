@@ -8,6 +8,7 @@ import { getFavorites, toggleFavoriteAction } from "@/app/actions/pokemon"
 export function useFavorites(user: User | null) {
     const [favorites, setFavorites] = useState<Set<number>>(new Set())
     const [isLoading, setIsLoading] = useState(true)
+    const [togglingIds, setTogglingIds] = useState<Set<number>>(new Set())
 
     const loadFavorites = useCallback(async () => {
         if (!user) return
@@ -36,6 +37,7 @@ export function useFavorites(user: User | null) {
         }
 
         const isCurrentlyFavorited = favorites.has(pokemonId)
+        setTogglingIds((prev) => new Set(prev).add(pokemonId))
 
         try {
             // Optimistic update
@@ -64,6 +66,12 @@ export function useFavorites(user: User | null) {
             }
         } catch (error) {
             console.error("Error toggling favorite:", error)
+        } finally {
+            setTogglingIds((prev) => {
+                const next = new Set(prev)
+                next.delete(pokemonId)
+                return next
+            })
         }
     }
 
@@ -72,6 +80,7 @@ export function useFavorites(user: User | null) {
         isLoading,
         toggleFavorite,
         isFavorited: (pokemonId: number) => favorites.has(pokemonId),
+        isToggleLoading: (pokemonId: number) => togglingIds.has(pokemonId),
         refreshFavorites: loadFavorites,
     }
 }

@@ -7,12 +7,13 @@ import { useFavorites } from "@/hooks/use-favorites"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/components/auth-provider"
+import { Loader2 } from "lucide-react"
 
 export default function FavoritesPage() {
     const { user, loading: authLoading } = useAuth()
     const [favoritePokemon, setFavoritePokemon] = useState<Pokemon[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const { favorites, toggleFavorite } = useFavorites(user)
+    const { favorites, toggleFavorite, isFavorited, isLoading: favoritesLoading, isToggleLoading } = useFavorites(user)
 
     const loadFavoritePokemon = useCallback(async () => {
         setIsLoading(true)
@@ -42,13 +43,13 @@ export default function FavoritesPage() {
     useEffect(() => {
         if (user && favorites.size > 0) {
             loadFavoritePokemon()
-        } else {
+        } else if (!favoritesLoading) {
             setFavoritePokemon([])
             setIsLoading(false)
         }
-    }, [user, favorites, loadFavoritePokemon])
+    }, [user, favorites, loadFavoritePokemon, favoritesLoading])
 
-    if (authLoading) {
+    if (authLoading || favoritesLoading) {
         return (
             <div className="container mx-auto px-4 py-12">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -90,13 +91,9 @@ export default function FavoritesPage() {
                 </div>
 
                 {isLoading ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {[...Array(4)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="h-96 rounded-2xl bg-card/50 animate-pulse border border-border/50 backdrop-blur-sm"
-                            />
-                        ))}
+                    <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <p className="text-muted-foreground italic">Fetching your favorite Pokemon...</p>
                     </div>
                 ) : favorites.size === 0 ? (
                     <div className="text-center py-12">
@@ -114,6 +111,7 @@ export default function FavoritesPage() {
                                 user={user}
                                 isFavorited={true}
                                 onToggleFavorite={toggleFavorite}
+                                isToggleLoading={isToggleLoading(pokemon.id)}
                             />
                         ))}
                     </div>

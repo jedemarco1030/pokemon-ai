@@ -128,7 +128,7 @@ export default function RegisterPage() {
                 email: formData.email,
                 password: formData.password,
                 options: {
-                    emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || window.location.origin,
+                    emailRedirectTo: `${window.location.origin}/auth/callback`,
                     data: {
                         first_name: formData.firstName,
                         last_name: formData.lastName,

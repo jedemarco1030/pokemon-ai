@@ -10,9 +10,10 @@ interface PokemonListProps {
     favorites: Set<number>
     onToggleFavorite: (pokemonId: number, pokemonName: string) => void
     isFavorited: (pokemonId: number) => boolean
+    isToggleLoading: (pokemonId: number) => boolean
 }
 
-export function PokemonList({ pokemon, user, onToggleFavorite, isFavorited }: PokemonListProps) {
+export function PokemonList({ pokemon, user, onToggleFavorite, isFavorited, isToggleLoading }: PokemonListProps) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {pokemon.map((poke) => (
@@ -22,6 +23,7 @@ export function PokemonList({ pokemon, user, onToggleFavorite, isFavorited }: Po
                     user={user}
                     isFavorited={isFavorited(poke.id)}
                     onToggleFavorite={onToggleFavorite}
+                    isToggleLoading={isToggleLoading(poke.id)}
                 />
             ))}
         </div>
