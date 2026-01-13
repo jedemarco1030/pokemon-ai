@@ -43,7 +43,7 @@ function SemanticSearchContent() {
     } | null>(null)
     const [error, setError] = useState<string | null>(null)
     const { user } = useAuth()
-    const { favorites, toggleFavorite, isFavorited } = useFavorites(user)
+    const { favorites, toggleFavorite, isFavorited, isToggleLoading } = useFavorites(user)
 
     const handleSearch = async (e?: React.FormEvent) => {
         if (e) e.preventDefault()
@@ -182,6 +182,7 @@ function SemanticSearchContent() {
                         favorites={favorites}
                         onToggleFavorite={toggleFavorite}
                         isFavorited={isFavorited}
+                        isToggleLoading={isToggleLoading}
                     />
                 </div>
             ) : null}
