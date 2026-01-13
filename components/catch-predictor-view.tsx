@@ -89,7 +89,7 @@ export function CatchPredictorView({ initialPokemonId }: { initialPokemonId?: nu
                     Catch Probability Predictor
                 </h1>
                 <p className="text-muted-foreground">
-                    Estimate your chances of catching a Pokemon based on its health, status, and the Poke Ball used.
+                    Estimate your chances of catching a Pokémon based on its health, status, and the Poké Ball used.
                 </p>
             </div>
 
@@ -99,7 +99,7 @@ export function CatchPredictorView({ initialPokemonId }: { initialPokemonId?: nu
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2 text-lg">
                                 <Target className="w-5 h-5 text-primary" />
-                                Target Pokemon
+                                Target Pokémon
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -116,7 +116,7 @@ export function CatchPredictorView({ initialPokemonId }: { initialPokemonId?: nu
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="text-xl font-bold capitalize">{selectedPokemon.name}</h3>
-                                        <p className="text-sm text-muted-foreground">Capture Rate: {selectedPokemon.captureRate}</p>
+                                        <p className="text-sm text-muted-foreground">Base Capture Rate: {selectedPokemon.captureRate}/255</p>
                                     </div>
                                     <Button variant="ghost" size="sm" onClick={() => setSearchModalOpen(true)}>
                                         Change
@@ -129,7 +129,7 @@ export function CatchPredictorView({ initialPokemonId }: { initialPokemonId?: nu
                                     onClick={() => setSearchModalOpen(true)}
                                 >
                                     <Target className="w-6 h-6 text-muted-foreground" />
-                                    Select a Pokemon
+                                    Select a Pokémon
                                 </Button>
                             )}
                         </CardContent>
@@ -177,13 +177,13 @@ export function CatchPredictorView({ initialPokemonId }: { initialPokemonId?: nu
                             </div>
 
                             <div className="space-y-2">
-                                <Label>Poke Ball Type</Label>
+                                <Label>Poké Ball Type</Label>
                                 <Select value={ballType} onValueChange={setBallType}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select ball" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="poke-ball">Poke Ball</SelectItem>
+                                        <SelectItem value="poke-ball">Poké Ball</SelectItem>
                                         <SelectItem value="great-ball">Great Ball</SelectItem>
                                         <SelectItem value="ultra-ball">Ultra Ball</SelectItem>
                                         <SelectItem value="master-ball">Master Ball</SelectItem>
@@ -280,7 +280,7 @@ export function CatchPredictorView({ initialPokemonId }: { initialPokemonId?: nu
                                     </div>
                                     <div className="max-w-[200px]">
                                         <p className="text-muted-foreground">
-                                            Select a Pokemon and adjust the battle parameters to see your results.
+                                            Select a Pokémon and adjust the battle parameters to see your results.
                                         </p>
                                     </div>
                                 </div>

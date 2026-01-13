@@ -41,7 +41,7 @@ export function TeamBuilderView({ user }: { user: User }) {
         const teams = await getTeams(user.id)
 
         // Fetch details for each team member to get types
-        const teamsWithDetails = await Promise.all(teams.map(async (team: any) => {
+        const teamsWithDetails = await Promise.all(teams.map(async (team) => {
             const membersWithDetails = await Promise.all(team.members.map(async (member: { pokemon_id: number; pokemon_name: string; slot: number }) => {
                 try {
                     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${member.pokemon_id}`)
@@ -105,7 +105,7 @@ export function TeamBuilderView({ user }: { user: User }) {
 
         const validMembers = members.filter((m): m is TeamMember => m !== null)
         if (validMembers.length === 0) {
-            toast.error("Please add at least one Pokemon to your team")
+            toast.error("Please add at least one Pokémon to your team")
             return
         }
 
@@ -173,7 +173,7 @@ export function TeamBuilderView({ user }: { user: User }) {
                 }
 
                 setMembers(newMembers)
-                toast.success("AI suggested some Pokemon for your team!")
+                toast.success("AI suggested some Pokémon for your team!")
             } else {
                 toast.error(result.error || "Failed to get AI suggestions")
             }
@@ -202,7 +202,7 @@ export function TeamBuilderView({ user }: { user: User }) {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <h1 className="text-3xl font-bold">New Team</h1>
-                        <p className="text-muted-foreground">Select up to 6 Pokemon to build your team.</p>
+                        <p className="text-muted-foreground">Select up to 6 Pokémon to build your team.</p>
                     </div>
                     <div className="flex items-center gap-2">
                         <Button variant="outline" onClick={handleAISuggest} disabled={isSuggesting} className="gap-2">

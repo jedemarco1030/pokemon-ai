@@ -43,7 +43,7 @@ export function PokemonSearchModal({ open, onOpenChange, onSelect }: PokemonSear
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[600px] h-[80vh] flex flex-col p-0">
                 <DialogHeader className="p-6 pb-2">
-                    <DialogTitle>Search Pokemon</DialogTitle>
+                    <DialogTitle>Search Pokémon</DialogTitle>
                 </DialogHeader>
                 <div className="px-6 pb-4">
                     <div className="relative">
@@ -64,7 +64,7 @@ export function PokemonSearchModal({ open, onOpenChange, onSelect }: PokemonSear
                         </div>
                     ) : pokemon.length === 0 ? (
                         <div className="text-center py-12 text-muted-foreground">
-                            No Pokemon found.
+                            No Pokémon found.
                         </div>
                     ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">

@@ -37,7 +37,7 @@ export function PokemonSearch() {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input
                         type="text"
-                        placeholder="Search for a Pokemon (min 3 characters)..."
+                        placeholder="Search for a Pokémon (min 3 characters)..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="pl-12 pr-4 h-14 text-lg border-2 focus-visible:ring-primary"
@@ -63,7 +63,7 @@ export function PokemonSearch() {
             {!loading && pokemon.length === 0 && !error && (
                 <div className="text-center py-20">
                     <p className="text-muted-foreground text-lg">
-                        {searchQuery.length >= 3 ? "No Pokemon found. Try a different search!" : "Start typing to search Pokemon!"}
+                        {searchQuery.length >= 3 ? "No Pokémon found. Try a different search!" : "Start typing to search Pokémon!"}
                     </p>
                 </div>
             )}

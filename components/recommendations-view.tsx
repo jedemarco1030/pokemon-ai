@@ -88,7 +88,7 @@ export function RecommendationsView({ user }: { user: User }) {
                             You don&apos;t have enough favorites yet for us to make good recommendations.
                         </p>
                         <Button asChild>
-                            <Link href="/">Browse and Favorite Pokemon</Link>
+                            <Link href="/">Browse and Favorite Pokémon</Link>
                         </Button>
                     </CardContent>
                 </Card>

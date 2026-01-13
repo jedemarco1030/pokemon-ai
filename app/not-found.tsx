@@ -20,7 +20,7 @@ export default function NotFound() {
                 <Button asChild variant="outline" size="lg">
                     <Link href="/pokesearch" className="gap-2">
                         <Search className="h-4 w-4" />
-                        Search Pokemon
+                        Search Pokémon
                     </Link>
                 </Button>
             </div>

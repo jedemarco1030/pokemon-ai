@@ -10,7 +10,7 @@ export default function SemanticSearchPage() {
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                         {
-                            "Describe the Pokemon you're looking for in natural language, and our AI will find them for you."
+                            "Describe the Pokémon you're looking for in natural language, and our AI will find them for you."
                         }
                     </p>
                 </header>

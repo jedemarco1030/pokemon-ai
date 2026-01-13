@@ -81,7 +81,7 @@ export function WhosThatPokemonView() {
                 })
                 toast.success(`It\'s ${res.pokemonName}!`)
             } else {
-                toast.error(res.error || "Could not recognize Pokemon")
+                toast.error(res.error || "Could not recognize Pokémon")
             }
         } catch (err) {
             console.error("Error during analysis:", err)

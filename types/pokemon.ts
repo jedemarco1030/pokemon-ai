@@ -29,6 +29,9 @@ export interface PokemonDetails extends Pokemon {
         id: number
         name: string
         sprite: string
+        minLevel?: number
+        item?: string
+        trigger?: string
     }>
     moves: Array<{
         name: string

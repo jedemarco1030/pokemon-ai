@@ -29,7 +29,7 @@ export function PokeJournalView({ user }: { user: User }) {
     const fetchEntries = useCallback(async () => {
         setIsLoading(true)
         const data = await getJournalEntries(user.id)
-        setEntries(data.map((e: any) => ({
+        setEntries(data.map((e) => ({
             ...e,
             created_at: new Date(e.created_at)
         })))
@@ -86,9 +86,9 @@ export function PokeJournalView({ user }: { user: User }) {
                 <div className="space-y-1">
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent flex items-center gap-3">
                         <Book className="w-8 h-8 text-primary" />
-                        PokeJournal
+                        PokéJournal
                     </h1>
-                    <p className="text-muted-foreground">Document your Pokemon journey and get AI-powered insights.</p>
+                    <p className="text-muted-foreground">Document your Pokémon journey and get AI-powered insights.</p>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@ export function PokeJournalView({ user }: { user: User }) {
                     <Card>
                         <CardHeader>
                             <CardTitle>Log Your Adventure</CardTitle>
-                            <CardDescription>What happened in your Pokemon journey today?</CardDescription>
+                            <CardDescription>What happened in your Pokémon journey today?</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleSaveEntry} className="space-y-4">

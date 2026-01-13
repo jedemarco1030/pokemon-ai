@@ -30,7 +30,7 @@ async function getPokemonDetails(id: string): Promise<PokemonDetails | null> {
         const evolutionData = await evolutionRes.json()
 
         // Parse evolution chain
-        const evolutionChain: Array<{ id: number; name: string; sprite: string }> = []
+        const evolutionChain: Array<{ id: number; name: string; sprite: string; minLevel?: number; item?: string; trigger?: string }> = []
         let currentEvolution = evolutionData.chain
 
         while (currentEvolution) {
@@ -40,10 +40,15 @@ async function getPokemonDetails(id: string): Promise<PokemonDetails | null> {
             })
             const evolutionPokemonData = await evolutionPokemon.json()
 
+            const evolutionDetails = currentEvolution.evolution_details[0]
+
             evolutionChain.push({
                 id: Number.parseInt(evolutionId),
                 name: currentEvolution.species.name,
                 sprite: evolutionPokemonData.sprites.other["official-artwork"].front_default,
+                minLevel: evolutionDetails?.min_level || undefined,
+                item: evolutionDetails?.item?.name || undefined,
+                trigger: evolutionDetails?.trigger?.name || undefined,
             })
 
             currentEvolution = currentEvolution.evolves_to[0]

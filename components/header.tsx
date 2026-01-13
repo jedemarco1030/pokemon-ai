@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Moon, Sun, ChevronDown } from "lucide-react"
+import { Moon, Sun, ChevronDown, LogOut, Menu, User as UserIcon, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -33,14 +33,11 @@ export function Header({ user }: { user: User | null }) {
         const fetchProfile = async () => {
             if (user) {
                 try {
-                    console.log("[Header] Fetching profile for user:", user.id)
                     const existingProfile = await getProfile(user.id)
 
                     if (existingProfile) {
-                        console.log("[Header] Profile found:", existingProfile)
                         setProfile(existingProfile as UserProfile)
                     } else {
-                        console.log("[Header] No profile found, creating one...")
                         const firstName = user.user_metadata?.first_name || "User"
                         const lastName = user.user_metadata?.last_name || ""
                         const email = user.email || ""
@@ -52,11 +49,9 @@ export function Header({ user }: { user: User | null }) {
                         })
 
                         if (newProfile) {
-                            console.log("[Header] New profile created:", newProfile)
                             setProfile(newProfile as UserProfile)
                         } else {
                             // If createOrUpdateProfile returns null (caught error), use fallback
-                            console.warn("[Header] Failed to create profile, using fallback.")
                             setProfile({
                                 first_name: (user.user_metadata?.first_name as string) || "User",
                                 last_name: (user.user_metadata?.last_name as string) || "",
@@ -93,8 +88,8 @@ export function Header({ user }: { user: User | null }) {
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 {/* Left: Logo and Brand */}
                 <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                    <div className="relative w-10 h-10">
-                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <div className="relative w-10 h-10 group">
+                        <svg viewBox="0 0 100 100" className="w-full h-full group-hover:rotate-180 transition-transform duration-700">
                             <circle
                                 cx="50"
                                 cy="50"
@@ -119,45 +114,55 @@ export function Header({ user }: { user: User | null }) {
                         </svg>
                     </div>
                     <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Pokemon AI
-          </span>
+                        Pokémon AI
+                    </span>
                 </Link>
 
                 {/* Right: Navigation Links and Theme Toggle */}
-                <div className="flex items-center gap-2 sm:gap-4 relative z-[60]">
-                    <span className="text-xs sm:text-sm font-medium hidden sm:inline-block">Welcome, {displayName}!</span>
+                <div className="flex items-center gap-2 sm:gap-4">
+                    {user && (
+                        <span className="text-xs sm:text-sm font-medium hidden md:inline-block">Welcome, {displayName}!</span>
+                    )}
 
                     {user && (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="sm" className="gap-1 sm:gap-2 cursor-pointer touch-manipulation active:opacity-70">
-                                    Features <ChevronDown className="h-4 w-4" />
+                                <Button variant="ghost" size="sm" className="gap-1 sm:gap-2 cursor-pointer touch-manipulation active:scale-95 transition-transform">
+                                    <Menu className="h-4 w-4 md:hidden" />
+                                    <span className="hidden md:inline">Features</span> <ChevronDown className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuContent align="end" className="w-56 max-h-[80vh] overflow-y-auto">
                                 <DropdownMenuItem asChild>
                                     <Link href="/pokesearch" className="w-full font-medium text-primary">PokéSearch</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="/poke-news" className="w-full">Poke-News & Meta</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href="/ai-search" className="w-full">AI Search</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href="/journal" className="w-full">Journal</Link>
+                                    <Link href="/battle-simulator" className="w-full">Battle Sim</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href="/games" className="w-full">Games</Link>
+                                    <Link href="/team-builder" className="w-full">Team Builder</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href="/move-optimizer" className="w-full">Optimizer</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
+                                    <Link href="/poke-news" className="w-full">Poké-News & Meta</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/journal" className="w-full">Journal</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
                                     <Link href="/recommendations" className="w-full">Recommendations</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
-                                    <Link href="/battle-simulator" className="w-full">Battle Sim</Link>
+                                    <Link href="/favorites" className="w-full">Favorites</Link>
+                                </DropdownMenuItem>
+                                <div className="h-px bg-border my-1" />
+                                <DropdownMenuItem asChild>
+                                    <Link href="/games" className="w-full">Games</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href="/whos-that-pokemon" className="w-full">Who&apos;s That?</Link>
@@ -165,29 +170,42 @@ export function Header({ user }: { user: User | null }) {
                                 <DropdownMenuItem asChild>
                                     <Link href="/catch-predictor" className="w-full">Catch Predictor</Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="/favorites" className="w-full">Favorites</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href="/team-builder" className="w-full">Team Builder</Link>
-                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     )}
 
                     {user ? (
-                        <Button variant="ghost" size="sm" onClick={handleLogout} className="cursor-pointer touch-manipulation active:opacity-70">
-                            Logout
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9 rounded-full border border-border/50">
+                                    <UserIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48">
+                                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground md:hidden border-b mb-1">
+                                    {displayName}
+                                </div>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/settings" className="flex items-center w-full">
+                                        <Settings className="mr-2 h-4 w-4" />
+                                        <span>Settings</span>
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+                                    <LogOut className="mr-2 h-4 w-4" />
+                                    <span>Logout</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     ) : (
-                        <>
-                            <Button variant="ghost" size="sm" asChild className="cursor-pointer touch-manipulation active:opacity-70">
+                        <div className="flex items-center gap-1">
+                            <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex cursor-pointer touch-manipulation active:scale-95 transition-transform">
                                 <Link href="/register">Register</Link>
                             </Button>
-                            <Button variant="ghost" size="sm" asChild className="cursor-pointer touch-manipulation active:opacity-70">
+                            <Button variant="default" size="sm" asChild className="cursor-pointer touch-manipulation active:scale-95 transition-transform">
                                 <Link href="/login">Login</Link>
                             </Button>
-                        </>
+                        </div>
                     )}
 
                     <Button

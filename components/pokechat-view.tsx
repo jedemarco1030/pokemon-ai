@@ -28,7 +28,7 @@ export function PokeChatView({ user, isOverlay = false }: { user: User, isOverla
     const fetchChatHistory = useCallback(async () => {
         setIsInitialLoading(true)
         const history = await getChatHistory(user.id)
-        setMessages(history.map((m: any) => ({
+        setMessages(history.map((m) => ({
             ...m,
             role: m.role as 'user' | 'assistant',
             created_at: new Date(m.created_at)

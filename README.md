@@ -1,16 +1,16 @@
-# Pokemon AI
+# Pokémon AI
 
-The ultimate AI-powered companion for your Pokemon journey. From strategic battle analysis to semantic news tracking, Pokemon AI provides everything a trainer needs to excel.
+The ultimate AI-powered companion for your Pokémon journey. From strategic battle analysis to semantic news tracking, Pokémon AI provides everything a trainer needs to excel.
 
 ## 🚀 Features
 
 - **AI Battle Simulator**: Test your skills against iconic Gym Leaders like Brock and Misty in an AI-powered battle arena.
-- **Poke-News & Meta-Analysis**: Stay ahead of the game with real-time semantic news and competitive meta-analysis.
+- **Poké-News & Meta-Analysis**: Stay ahead of the game with real-time semantic news and competitive meta-analysis.
 - **Pro Team Builder**: Construct the perfect team and use the **Move Optimizer** to maximize your competitive edge.
 - **Trainer's Journal**: Document your journey and let AI summarize your milestones and provide growth suggestions.
 - **Catch Predictor**: Calculate your chances of success before throwing that Master Ball with our AI predictor.
-- **AI Search**: Experience semantic search to find Pokemon and information more intuitively.
-- **Minigames**: Put your knowledge to the test with "Who's That Pokemon?" and other interactive challenges.
+- **AI Search**: Experience semantic search to find Pokémon and information more intuitively.
+- **Minigames**: Put your knowledge to the test with "Who's That Pokémon?" and other interactive challenges.
 
 ## 🛠 Tech Stack
 

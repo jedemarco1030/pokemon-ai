@@ -63,7 +63,7 @@ function SemanticSearchContent() {
 
                 if (response.pokemonIds.length === 0) {
                     setResults([])
-                    setError("No Pokemon found matching your description.")
+                    setError("No Pokémon found matching your description.")
                 } else {
                     const pokemonPromises = response.pokemonIds.map(async (id: number) => {
                         const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -93,10 +93,47 @@ function SemanticSearchContent() {
 
     // Effect to handle initial query from URL
     useEffect(() => {
-        if (initialQuery) {
-            handleSearch()
+        const performInitialSearch = async () => {
+            if (initialQuery) {
+                setIsLoading(true)
+                setError(null)
+                try {
+                    const response = await processNaturalLanguageSearch(initialQuery)
+                    if (response.success && response.pokemonIds) {
+                        setFilters(response.filters)
+
+                        if (response.pokemonIds.length === 0) {
+                            setResults([])
+                            setError("No Pokémon found matching your description.")
+                        } else {
+                            const pokemonPromises = response.pokemonIds.map(async (id: number) => {
+                                const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                                const data = await res.json()
+                                return {
+                                    id: data.id,
+                                    name: data.name,
+                                    height: data.height,
+                                    weight: data.weight,
+                                    sprite: data.sprites.other["official-artwork"].front_default || data.sprites.front_default,
+                                    types: data.types.map((t: { type: { name: string } }) => t.type.name),
+                                }
+                            })
+                            const fetchedPokemon = await Promise.all(pokemonPromises)
+                            setResults(fetchedPokemon)
+                        }
+                    } else {
+                        setError(response.error || "Something went wrong.")
+                    }
+                } catch (err) {
+                    console.error(err)
+                    setError("Failed to perform semantic search.")
+                } finally {
+                    setIsLoading(false)
+                }
+            }
         }
-    }, []) // Run only once on mount
+        performInitialSearch()
+    }, [initialQuery])
 
     const setQueryAndSearch = (newQuery: string) => {
         setQuery(newQuery)
@@ -125,7 +162,7 @@ function SemanticSearchContent() {
                                 <Input
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
-                                    placeholder="e.g., 'Blue water pokemon from Gen 1' or 'Legendary fire types'..."
+                                    placeholder="e.g., 'Blue water Pokémon from Gen 1' or 'Legendary fire types'..."
                                     className="pl-12 h-12 text-lg focus-visible:ring-primary border-primary/30"
                                 />
                             </div>
@@ -135,7 +172,7 @@ function SemanticSearchContent() {
                         </form>
                         <div className="mt-4 flex flex-wrap gap-2 items-center text-sm text-muted-foreground">
                             <span>Try:</span>
-                            <button onClick={() => setQueryAndSearch("Red dragon pokemon")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Red dragon pokemon&quot;</button>
+                            <button onClick={() => setQueryAndSearch("Red dragon Pokémon")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Red dragon Pokémon&quot;</button>
                             <button onClick={() => setQueryAndSearch("Gen 1 water types")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Gen 1 water types&quot;</button>
                             <button onClick={() => setQueryAndSearch("Legendary grass types")} className="hover:text-primary transition-colors underline-offset-4 hover:underline">&quot;Legendary grass types&quot;</button>
                         </div>

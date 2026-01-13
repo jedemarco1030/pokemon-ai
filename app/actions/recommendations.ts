@@ -31,12 +31,32 @@ export async function getPersonalizedRecommendations(userId: string) {
             })
         )
 
-        const validDetails = favoriteDetails.filter((d: any) => d !== null)
+        interface PokeAPIDetail {
+            types: {
+                type: {
+                    name: string;
+                };
+            }[];
+            id: number;
+            name: string;
+            height: number;
+            weight: number;
+            sprites: {
+                front_default: string;
+                other: {
+                    "official-artwork": {
+                        front_default: string;
+                    };
+                };
+            };
+        }
+
+        const validDetails = favoriteDetails.filter((d): d is PokeAPIDetail => d !== null)
 
         // 3. Simple Recommendation Logic: Recommend Pokémon of the same types
         const types = new Array<string>()
-        validDetails.forEach((d: any) => {
-            (d as { types: { type: { name: string } }[] }).types.forEach((t: { type: { name: string } }) => types.push(t.type.name))
+        validDetails.forEach((d) => {
+            d.types.forEach((t) => types.push(t.type.name))
         })
 
         // Find most common type

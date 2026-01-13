@@ -11,10 +11,10 @@ export default async function GamesPage() {
             <div className="container mx-auto px-4 py-8 max-w-6xl">
                 <header className="mb-12">
                     <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                        Pokemon Games
+                        Pokémon Games
                     </h1>
                     <p className="text-muted-foreground text-lg">
-                        Explore the various generations and regions of the Pokemon world.
+                        Explore the various generations and regions of the Pokémon world.
                     </p>
                 </header>
 
@@ -30,7 +30,7 @@ export default async function GamesPage() {
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-sm text-muted-foreground">
-                                        Click to see key features, towns, and Pokemon from this version group.
+                                        Click to see key features, towns, and Pokémon from this version group.
                                     </p>
                                 </CardContent>
                             </Card>

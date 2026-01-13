@@ -269,7 +269,7 @@ export function BattleSimulatorView({ user }: { user: User }) {
                             <Card key={team.id} className="hover:border-primary transition-colors overflow-hidden">
                                 <CardHeader className="bg-muted/50">
                                     <CardTitle>{team.name}</CardTitle>
-                                    <CardDescription>{team.members.length} Pokemon</CardDescription>
+                                    <CardDescription>{team.members.length} Pokémon</CardDescription>
                                 </CardHeader>
                                 <CardContent className="p-4 space-y-4">
                                     <div className="flex -space-x-4 overflow-hidden py-2">
@@ -495,11 +495,11 @@ export function BattleSimulatorView({ user }: { user: User }) {
                                 <div className="space-y-4">
                                     <div className="p-3 bg-muted rounded-lg">
                                         <p className="text-sm font-semibold text-primary mb-1">Recommendation:</p>
-                                        <p className="text-sm leading-relaxed">{advice.recommendation}</p>
+                                        <p className="text-sm leading-relaxed">{advice.recommendation.replace(/Pokemon/gi, "Pokémon")}</p>
                                     </div>
                                     <div className="p-3 border rounded-lg">
                                         <p className="text-sm font-semibold mb-1">Analysis:</p>
-                                        <p className="text-sm text-muted-foreground leading-relaxed">{advice.analysis}</p>
+                                        <p className="text-sm text-muted-foreground leading-relaxed">{advice.analysis.replace(/Pokemon/gi, "Pokémon")}</p>
                                     </div>
                                     {advice.suggestedMove && (
                                         <div className="flex items-center gap-2 text-sm">

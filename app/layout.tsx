@@ -5,12 +5,12 @@ import { AuthProvider } from "@/components/auth-provider"
 import { LayoutClient } from "@/components/layout-client"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" })
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
 
 export const metadata: Metadata = {
-    title: "Pokemon AI - Find Your Favorite Pokemon",
-    description: "Search and discover Pokemon using the PokeAPI",
+    title: "Pokémon AI - Find Your Favorite Pokémon",
+    description: "Search and discover Pokémon using the PokeAPI",
     icons: {
         icon: [
             {
@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <body className="font-sans antialiased">
+        <body className={`${geist.variable} ${geistMono.variable} font-sans antialiased`}>
         <AuthProvider>
             <LayoutClient>{children}</LayoutClient>
         </AuthProvider>

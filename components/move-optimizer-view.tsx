@@ -22,7 +22,8 @@ const roles = [
     { value: "Revenge Killer", label: "Revenge Killer", icon: Wand2 },
 ]
 
-export function MoveOptimizerView({ user: _user }: { user: User }) {
+export function MoveOptimizerView({ user }: { user: User }) {
+    console.log("MoveOptimizerView for user:", user.id)
     const [selectedPokemon, setSelectedPokemon] = useState<{ id: number, name: string, sprite: string } | null>(null)
     const [selectedRole, setSelectedRole] = useState<string>("Sweeper")
     const [isOptimizing, setIsOptimizing] = useState(false)
@@ -64,7 +65,7 @@ export function MoveOptimizerView({ user: _user }: { user: User }) {
                     AI Move Set Optimizer
                 </h1>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Fine-tune your Pokemon for any role. Our AI analyzes stats and movepools to recommend the best builds.
+                    Fine-tune your Pokémon for any role. Our AI analyzes stats and movepools to recommend the best builds.
                 </p>
             </div>
 
@@ -100,7 +101,7 @@ export function MoveOptimizerView({ user: _user }: { user: User }) {
                                     onClick={() => setSearchModalOpen(true)}
                                 >
                                     <Sparkles className="w-4 h-4 text-primary" />
-                                    Select Pokemon
+                                    Select Pokémon
                                 </Button>
                             )}
                         </div>
@@ -211,7 +212,7 @@ export function MoveOptimizerView({ user: _user }: { user: User }) {
                         <Card className="h-full border-dashed border-2 flex flex-col items-center justify-center p-12 text-center text-muted-foreground">
                             <Wand2 className="w-16 h-16 mb-4 opacity-20" />
                             <h3 className="text-xl font-semibold mb-2">No Optimization Generated</h3>
-                            <p className="max-w-xs">Select a Pokemon and click &quot;Optimize Move Set&quot; to see the AI&apos;s recommendations.</p>
+                            <p className="max-w-xs">Select a Pokémon and click &quot;Optimize Move Set&quot; to see the AI&apos;s recommendations.</p>
                         </Card>
                     )}
                 </div>

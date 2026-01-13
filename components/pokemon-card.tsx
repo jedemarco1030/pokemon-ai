@@ -44,9 +44,8 @@ const typeColors: Record<string, string> = {
 export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavorite, isToggleLoading }: PokemonCardProps) {
     const handleFavoriteClick = (e: React.MouseEvent) => {
         e.preventDefault()
-        console.log("[v0] Star clicked", { user: !!user, pokemon: pokemon.name, id: pokemon.id })
         if (!user) {
-            toast.error("Please login to favorite a Pokemon", {
+            toast.error("Please login to favorite a Pokémon", {
                 description: "You need to be signed in to keep track of your favorites.",
                 action: {
                     label: "Login",
@@ -57,7 +56,6 @@ export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavori
         }
 
         if (onToggleFavorite) {
-            console.log("[v0] Calling onToggleFavorite")
             onToggleFavorite(pokemon.id, pokemon.name)
         }
     }
@@ -71,8 +69,9 @@ export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavori
                         <span className="text-sm text-muted-foreground font-mono">#{pokemon.id.toString().padStart(3, "0")}</span>
                         <button
                             onClick={handleFavoriteClick}
-                            className={`relative group ${!user ? "opacity-50 cursor-pointer" : "cursor-pointer hover:scale-110 transition-transform"} ${isToggleLoading ? "opacity-50 cursor-not-allowed" : ""}`}
-                            title={!user ? "Login to favorite Pokemon" : isFavorited ? "Remove from favorites" : "Add to favorites"}
+                            className={`relative group p-1 rounded-full hover:bg-secondary transition-colors ${!user ? "opacity-50 cursor-pointer" : "cursor-pointer hover:scale-110 transition-transform"} ${isToggleLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+                            aria-label={!user ? "Login to favorite Pokémon" : isFavorited ? `Remove ${pokemon.name} from favorites` : `Add ${pokemon.name} to favorites`}
+                            title={!user ? "Login to favorite Pokémon" : isFavorited ? "Remove from favorites" : "Add to favorites"}
                             disabled={isToggleLoading}
                         >
                             {isToggleLoading ? (
@@ -84,7 +83,7 @@ export function PokemonCard({ pokemon, user, isFavorited = false, onToggleFavori
                             )}
                             {!user && (
                                 <div className="absolute bottom-full mb-2 right-0 w-48 bg-popover text-popover-foreground text-xs rounded-md shadow-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border">
-                                    Login to favorite Pokemon
+                                    Login to favorite Pokémon
                                 </div>
                             )}
                         </button>

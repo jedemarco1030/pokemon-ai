@@ -11,13 +11,15 @@ import { Analytics } from "@vercel/analytics/next"
 export function LayoutClient({ children }: { children: React.ReactNode }) {
     const { user } = useAuth()
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             <Header user={user} />
-            {children}
+            <main className="flex-grow">
+                {children}
+            </main>
             <Footer />
             <PokeChatOverlay />
             <Toaster position="top-center" />
             <Analytics />
-        </>
+        </div>
     )
 }

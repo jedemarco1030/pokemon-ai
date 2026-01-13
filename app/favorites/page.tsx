@@ -13,7 +13,7 @@ export default function FavoritesPage() {
     const { user, loading: authLoading } = useAuth()
     const [favoritePokemon, setFavoritePokemon] = useState<Pokemon[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const { favorites, toggleFavorite, isFavorited, isLoading: favoritesLoading, isToggleLoading } = useFavorites(user)
+    const { favorites, toggleFavorite, isLoading: favoritesLoading, isToggleLoading } = useFavorites(user)
 
     const loadFavoritePokemon = useCallback(async () => {
         setIsLoading(true)
@@ -69,7 +69,7 @@ export default function FavoritesPage() {
             <div className="container mx-auto px-4 py-12">
                 <div className="max-w-md mx-auto text-center space-y-6">
                     <h1 className="text-4xl font-bold">Favorites</h1>
-                    <p className="text-muted-foreground">Please log in to view your favorite Pokemon.</p>
+                    <p className="text-muted-foreground">Please log in to view your favorite Pokémon.</p>
                     <Button asChild>
                         <Link href="/login">Login</Link>
                     </Button>
@@ -86,20 +86,20 @@ export default function FavoritesPage() {
                         My Favorites
                     </h1>
                     <p className="text-muted-foreground">
-                        {favorites.size === 0 ? "You haven't added any favorites yet." : `${favorites.size} Pokemon`}
+                        {favorites.size === 0 ? "You haven't added any favorites yet." : `${favorites.size} Pokémon`}
                     </p>
                 </div>
 
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center py-12 space-y-4">
                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                        <p className="text-muted-foreground italic">Fetching your favorite Pokemon...</p>
+                        <p className="text-muted-foreground italic">Fetching your favorite Pokémon...</p>
                     </div>
                 ) : favorites.size === 0 ? (
                     <div className="text-center py-12">
-                        <p className="text-muted-foreground mb-4">Start exploring and add your favorite Pokemon!</p>
+                        <p className="text-muted-foreground mb-4">Start exploring and add your favorite Pokémon!</p>
                         <Button asChild>
-                            <Link href="/">Browse Pokemon</Link>
+                            <Link href="/">Browse Pokémon</Link>
                         </Button>
                     </div>
                 ) : (

@@ -68,7 +68,7 @@ export async function getProfile(userId: string) {
     }
 }
 
-export async function createOrUpdateProfile(userId: string, data: { first_name: string, last_name: string, email: string }) {
+export async function createOrUpdateProfile(userId: string, data: { first_name: string, last_name: string, email?: string }) {
     if (!userId) return null;
     try {
         console.log(`[createOrUpdateProfile] Upserting profile for userId: ${userId}`, data);
@@ -77,10 +77,13 @@ export async function createOrUpdateProfile(userId: string, data: { first_name: 
             update: data,
             create: {
                 id: userId,
-                ...data
+                first_name: data.first_name,
+                last_name: data.last_name,
+                email: data.email || ""
             }
         })
         console.log(`[createOrUpdateProfile] Upserted profile:`, profile);
+        revalidatePath("/settings")
         return profile;
     } catch (error) {
         console.error("[createOrUpdateProfile] Error upserting profile:", error instanceof Error ? error.message : error)

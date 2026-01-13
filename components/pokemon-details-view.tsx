@@ -45,7 +45,7 @@ export function PokemonDetailsView({ pokemon }: PokemonDetailsViewProps) {
 
     const handleFavoriteClick = async () => {
         if (!user) {
-            toast.error("Please login to favorite a Pokemon", {
+            toast.error("Please login to favorite a Pokémon", {
                 description: "You need to be signed in to keep track of your favorites.",
                 action: {
                     label: "Login",
@@ -96,14 +96,14 @@ export function PokemonDetailsView({ pokemon }: PokemonDetailsViewProps) {
                                 <button
                                     onClick={handleFavoriteClick}
                                     className={`ml-2 relative group ${!user ? "opacity-50 cursor-pointer" : "cursor-pointer hover:scale-110 transition-transform"}`}
-                                    title={!user ? "Login to favorite Pokemon" : favorited ? "Remove from favorites" : "Add to favorites"}
+                                    title={!user ? "Login to favorite Pokémon" : favorited ? "Remove from favorites" : "Add to favorites"}
                                 >
                                     <Star
                                         className={`w-8 h-8 ${favorited ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
                                     />
                                     {!user && (
                                         <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 bg-popover text-popover-foreground text-xs rounded-md shadow-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border text-center">
-                                            Login to favorite Pokemon
+                                            Login to favorite Pokémon
                                         </div>
                                     )}
                                 </button>
@@ -222,7 +222,7 @@ export function PokemonDetailsView({ pokemon }: PokemonDetailsViewProps) {
                                                 <Link href={`/pokemon/${evolution.id}`}>
                                                     <Card className="hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer">
                                                         <CardContent className="p-4">
-                                                            <div className="relative w-32 h-32 mb-2">
+                                                            <div className="relative w-32 h-32 mb-2 mx-auto">
                                                                 <Image
                                                                     src={evolution.sprite || "/placeholder.svg"}
                                                                     alt={evolution.name}
@@ -231,10 +231,23 @@ export function PokemonDetailsView({ pokemon }: PokemonDetailsViewProps) {
                                                                     unoptimized
                                                                 />
                                                             </div>
-                                                            <p className="text-center capitalize font-medium">{evolution.name}</p>
-                                                            <p className="text-center text-xs text-muted-foreground">
+                                                            <p className="text-center capitalize font-bold">{evolution.name}</p>
+                                                            <p className="text-center text-xs text-muted-foreground mb-2">
                                                                 #{evolution.id.toString().padStart(3, "0")}
                                                             </p>
+                                                            {evolution.trigger && (
+                                                                <div className="mt-2 pt-2 border-t border-border/50 text-center">
+                                                                    <Badge variant="outline" className="text-[10px] uppercase font-bold">
+                                                                        {evolution.trigger.replace("-", " ")}
+                                                                    </Badge>
+                                                                    {evolution.minLevel && (
+                                                                        <p className="text-xs mt-1 font-medium">Level {evolution.minLevel}</p>
+                                                                    )}
+                                                                    {evolution.item && (
+                                                                        <p className="text-xs mt-1 font-medium capitalize">{evolution.item.replace("-", " ")}</p>
+                                                                    )}
+                                                                </div>
+                                                            )}
                                                         </CardContent>
                                                     </Card>
                                                 </Link>
@@ -245,7 +258,7 @@ export function PokemonDetailsView({ pokemon }: PokemonDetailsViewProps) {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="text-muted-foreground">This Pokemon does not evolve.</p>
+                                    <p className="text-muted-foreground">This Pokémon does not evolve.</p>
                                 )}
                             </CardContent>
                         </Card>

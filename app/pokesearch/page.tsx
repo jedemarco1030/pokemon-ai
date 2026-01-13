@@ -10,7 +10,7 @@ export default function PokeSearchPage() {
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
                         {
-                            "Discover and explore Pokemon from the vast Pokemon universe. Search by name or browse the complete collection."
+                            "Discover and explore Pokémon from the vast Pokémon universe. Search by name or browse the complete collection."
                         }
                     </p>
                 </header>

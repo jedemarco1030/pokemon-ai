@@ -52,7 +52,7 @@ export default function PokeNewsPage() {
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
                     <div className="space-y-2">
                         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                            Poke-News & Meta
+                            Poké-News & Meta
                         </h1>
                         <p className="text-muted-foreground text-lg">
                             AI-powered insights into the world of Pokémon and competitive trends.
